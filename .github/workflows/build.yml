@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Setup Theos with SDK
-      uses: 1Conan/theos-action@v1
+      uses: 1Conan/theos-action@main
       with:
         ios_sdk: 16.2
         theos_version: latest
