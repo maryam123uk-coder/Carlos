@@ -23,30 +23,18 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y clang curl git perl llvm xz-utils file
+        sudo apt-get install -y clang curl git perl llvm xz-utils zip unzip
         mkdir -p $HOME/theos/sdks
         
-        # Download SDK and try multiple extraction methods
-        curl -sL -o sdk_file https://github.com/theos/sdks/raw/master/iPhoneOS16.2.sdk.tar.xz
+        # Download WORKING iOS SDK from reliable source
+        curl -sL -o sdk.tar.xz https://github.com/lechium/sdks/raw/main/iPhoneOS16.2.sdk.tar.xz
         
-        # Try different extraction methods
-        if file sdk_file | grep -q "XZ compressed"; then
-          echo "Extracting as XZ format..."
-          tar -xJf sdk_file -C $HOME/theos/sdks
-        elif file sdk_file | grep -q "bzip2"; then
-          echo "Extracting as bzip2 format..."
-          tar -xjf sdk_file -C $HOME/theos/sdks
-        elif file sdk_file | grep -q "gzip"; then
-          echo "Extracting as gzip format..."
-          tar -xzf sdk_file -C $HOME/theos/sdks
-        else
-          echo "Unknown file format, trying automatic extraction..."
-          tar -xf sdk_file -C $HOME/theos/sdks
-        fi
+        # Extract SDK
+        tar -xJf sdk.tar.xz -C $HOME/theos/sdks/
+        rm sdk.tar.xz
         
-        # Verify extraction worked
+        # Verify SDK extraction
         ls -la $HOME/theos/sdks/
-        rm sdk_file
         
     - name: Build project
       run: |
