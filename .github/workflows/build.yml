@@ -23,8 +23,8 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y clang curl git perl llvm
-        curl -sL https://github.com/theos/sdks/raw/master/iPhoneOS16.2.sdk.tbz2 | tar -xj -C $HOME/theos/sdks
+        sudo apt-get install -y clang curl git perl llvm bzip2 xz-utils
+        curl -sL https://github.com/theos/sdks/raw/master/iPhoneOS16.2.sdk.tar.xz | tar -xJ -C $HOME/theos/sdks
         
     - name: Build project
       run: |
